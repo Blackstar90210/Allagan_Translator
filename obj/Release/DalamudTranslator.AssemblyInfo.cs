@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DalamudTranslator")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.1")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0.1+c88c1c5e14865898414a952bdd093191a830d510")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0.1+5bf91ff7eb1515d445106ff2ad03bf25f567494a")]
 [assembly: System.Reflection.AssemblyProductAttribute("DalamudTranslator")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DalamudTranslator")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.1")]

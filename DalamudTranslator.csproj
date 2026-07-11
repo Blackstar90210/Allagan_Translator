@@ -50,8 +50,7 @@
     <PackageReference Include="LLamaSharp.Backend.Cpu" Version="*" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="icon_v2.png">
-      <Link>images\icon.png</Link>
+    <Content Include="images\icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
