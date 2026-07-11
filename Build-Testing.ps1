@@ -53,8 +53,7 @@ if (Test-Path $outputZip) {
 $json = Get-Content $pluginmasterPath -Raw | ConvertFrom-Json
 $json[0].TestingAssemblyVersion = $newVersion
 
-# ConvertTo-Json in PowerShell 5/7 formatta diversamente, usiamo un trucchetto per mantenere un bel formato
-$jsonString = $json | ConvertTo-Json -Depth 10
+$jsonString = ConvertTo-Json -InputObject @($json) -Depth 10
 Set-Content -Path $pluginmasterPath -Value $jsonString
 
 Write-Host "pluginmaster.json aggiornato con TestingAssemblyVersion: $newVersion" -ForegroundColor Green

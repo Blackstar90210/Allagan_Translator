@@ -43,7 +43,7 @@ $json[0].AssemblyVersion = $currentVersion
 # Per sicurezza allineiamo anche la TestingAssemblyVersion alla stabile per non retrocedere i tester
 $json[0].TestingAssemblyVersion = $currentVersion
 
-$jsonString = $json | ConvertTo-Json -Depth 10
+$jsonString = ConvertTo-Json -InputObject @($json) -Depth 10
 Set-Content -Path $pluginmasterPath -Value $jsonString
 
 Write-Host "pluginmaster.json aggiornato in versione stabile!" -ForegroundColor Green
