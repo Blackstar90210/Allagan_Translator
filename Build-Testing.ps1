@@ -39,7 +39,7 @@ if (Test-Path $outputZip) {
     Write-Host "Aggiunta icona al pacchetto zip..."
     Add-Type -AssemblyName System.IO.Compression.FileSystem
     $zip = [System.IO.Compression.ZipFile]::Open($outputZip, 'Update')
-    [System.IO.Compression.ZipFileExtensions]::CreateEntryFromFile($zip, "icon_v2.png", "DalamudTranslator/images/icon.png")
+    [System.IO.Compression.ZipFileExtensions]::CreateEntryFromFile($zip, "icon_v2.png", "images/icon.png")
     $zip.Dispose()
 
     Copy-Item -Path $outputZip -Destination "latest_test.zip" -Force
