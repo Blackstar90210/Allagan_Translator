@@ -22,7 +22,7 @@ Welcome to **Allagan Translator (Local AI & Online)**, the ultimate translation 
 1. Open **FFXIV** and open the Dalamud Settings by typing `/xlsettings` in chat.
 2. Go to the **Experimental** tab.
 3. Scroll down to **Custom Plugin Repositories** and paste the following link:
-   `https://raw.githubusercontent.com/Blackstar90210/Allagan-Translator-Local-AI-Online-/main/pluginmaster.json`
+   `https://raw.githubusercontent.com/Blackstar90210/Allagan-Translator--Local-AI---Online-/main/pluginmaster.json`
 4. Click the **+** button to add it, then click **Save and Close**.
 5. Open the Dalamud Plugin Installer, search for **Allagan Translator (Local AI & Online)** and click Install.
 
@@ -57,7 +57,7 @@ Benvenuto in **Allagan Translator (Local AI & Online)**, l'overlay di traduzione
 1. Avvia **FFXIV** e apri le Impostazioni di Dalamud scrivendo `/xlsettings` in chat.
 2. Vai nella scheda **Experimental**.
 3. Scorri fino a **Custom Plugin Repositories** e incolla questo link:
-   `https://raw.githubusercontent.com/Blackstar90210/Allagan-Translator-Local-AI-Online-/main/pluginmaster.json`
+   `https://raw.githubusercontent.com/Blackstar90210/Allagan-Translator--Local-AI---Online-/main/pluginmaster.json`
 4. Clicca il tasto **+** per aggiungerlo, poi fai clic su **Save and Close**.
 5. Apri il Plugin Installer di Dalamud, cerca **Allagan Translator (Local AI & Online)** e installalo.
 
