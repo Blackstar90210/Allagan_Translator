@@ -148,23 +148,17 @@ namespace DalamudTranslator.Services
 
                 if (!File.Exists(modelPath))
                 {
-                    this.IsDownloading = true;
-                    this.log.Information("Download del modello Llama in corso...");
-                    
-                    var url = "https://huggingface.co/bartowski/Llama-3.2-3B-Instruct-GGUF/resolve/main/Llama-3.2-3B-Instruct-Q4_K_M.gguf";
                     var tmpPath = modelPath + ".tmp";
+                    await DownloadModelAsync(tmpPath);
                     
-                    using (var response = await this.httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead))
+                    if (File.Exists(tmpPath))
                     {
-                        response.EnsureSuccessStatusCode();
-                        using (var fs = new FileStream(tmpPath, FileMode.Create, FileAccess.Write, FileShare.None))
-                        {
-                            await response.Content.CopyToAsync(fs);
-                        }
+                        File.Move(tmpPath, modelPath);
                     }
-                    
-                    File.Move(tmpPath, modelPath);
-                    this.IsDownloading = false;
+                    else
+                    {
+                        throw new Exception("Il download del modello è fallito.");
+                    }
                 }
 
                 this.log.Information("Inizializzazione modello in memoria...");

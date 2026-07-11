@@ -4,7 +4,7 @@
         "Name":  "Allagan Translator (Local AI \u0026 Online)",
         "InternalName":  "DalamudTranslator",
         "AssemblyVersion":  "1.0.0.1",
-        "TestingAssemblyVersion":  "1.0.0.6",
+        "TestingAssemblyVersion":  "1.0.0.7",
         "Description":  "Offline translation plugin directly inside FFXIV.",
         "ApplicableVersion":  "any",
         "Tags":  [
