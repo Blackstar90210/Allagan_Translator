@@ -1,0 +1,26 @@
+﻿[
+  {
+    "Author": "Blackstar90210",
+    "Name": "Allagan Translator (Local AI & Online)",
+    "InternalName": "DalamudTranslator",
+    "AssemblyVersion": "1.0.0.0",
+    "Description": "Offline translation plugin directly inside FFXIV.",
+    "ApplicableVersion": "any",
+    "Tags": [
+      "translation",
+      "chat",
+      "ai",
+      "llama"
+    ],
+    "DalamudApiLevel": 15,
+    "LoadRequiredState": 0,
+    "LoadSync": false,
+    "CanUnloadAsync": false,
+    "LoadPriority": 0,
+    "Punchline": "Translate FFXIV natively and offline!",
+    "AcceptsFeedback": true,
+    "DownloadLinkInstall": "https://raw.githubusercontent.com/Blackstar90210/Allagan-Translator--Local-AI---Online-/main/latest.zip",
+    "DownloadLinkTesting": "https://raw.githubusercontent.com/Blackstar90210/Allagan-Translator--Local-AI---Online-/main/latest.zip",
+    "DownloadLinkUpdate": "https://raw.githubusercontent.com/Blackstar90210/Allagan-Translator--Local-AI---Online-/main/latest.zip"
+  }
+]
