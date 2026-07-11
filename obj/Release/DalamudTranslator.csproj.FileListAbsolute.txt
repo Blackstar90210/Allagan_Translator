@@ -87,6 +87,7 @@ C:\Programmazione\DalamudTranslator\bin\Release\runtimes\win-x64\native\noavx\gg
 C:\Programmazione\DalamudTranslator\bin\Release\runtimes\win-x64\native\noavx\ggml.dll
 C:\Programmazione\DalamudTranslator\bin\Release\runtimes\win-x64\native\noavx\llama.dll
 C:\Programmazione\DalamudTranslator\bin\Release\runtimes\win-x64\native\noavx\mtmd.dll
+C:\Programmazione\DalamudTranslator\bin\Release\images\icon.png
 C:\Programmazione\DalamudTranslator\bin\Release\DalamudTranslator.deps.json
 C:\Programmazione\DalamudTranslator\bin\Release\DalamudTranslator.dll
 C:\Programmazione\DalamudTranslator\bin\Release\DalamudTranslator.pdb
