@@ -622,7 +622,7 @@
     "C:\\Users\\Video\\.nuget\\packages\\": {}
   },
   "project": {
-    "version": "1.0.0.1",
+    "version": "1.0.0.2",
     "restore": {
       "projectUniqueName": "C:\\Programmazione\\DalamudTranslator\\DalamudTranslator.csproj",
       "projectName": "DalamudTranslator",
