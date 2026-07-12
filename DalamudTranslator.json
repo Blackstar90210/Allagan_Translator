@@ -17,6 +17,6 @@
   "LoadBehavior": 0,
   "Punchline": "Translate FFXIV natively and offline!",
   "AcceptsFeedback": true,
-  "IconUrl": "https://raw.githubusercontent.com/Blackstar90210/Allagan-Translator--Local-AI---Online-/main/icon.png",
-  "RepoUrl": "https://github.com/Blackstar90210/Allagan-Translator--Local-AI---Online-"
+  "IconUrl": "https://raw.githubusercontent.com/Blackstar90210/Allagan_Translator/main/icon.png",
+  "RepoUrl": "https://github.com/Blackstar90210/Allagan_Translator"
 }
