@@ -3,12 +3,13 @@ using Dalamud.Plugin;
 using System;
 using System.Collections.Generic;
 
-namespace DalamudTranslator
+namespace AllaganTranslator
 {
     public enum TranslationEngineType
     {
         GoogleCloudFree,
-        LocalLlamaVulkan
+        LocalLlama3B_CPU,
+        LocalLlama8B_CPU
     }
 
     [Serializable]
@@ -46,3 +47,4 @@ namespace DalamudTranslator
         }
     }
 }
+

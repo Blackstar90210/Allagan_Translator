@@ -8,7 +8,7 @@ on:
 jobs:
   release:
     name: Create GitHub Release
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     permissions:
       contents: write # Serve il permesso per scrivere la release
     
@@ -16,8 +16,38 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
         
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+          
+      - name: Download Dalamud
+        run: |
+          Invoke-WebRequest -Uri https://goatcorp.github.io/dalamud-distrib/latest.zip -OutFile latest.zip
+          Expand-Archive -Force latest.zip "$env:RUNNER_TEMP\dalamud"
+          
+      - name: Build Plugin
+        run: dotnet build -c Release
+        env:
+          DALAMUD_HOME: ${{ runner.temp }}\dalamud
+        
+      - name: Pack Latest Zip
+        run: |
+          Copy-Item "bin/Release/AllaganTranslator/latest.zip" "latest.zip" -Force
+          # Inietta l'icona
+          Add-Type -AssemblyName System.IO.Compression.FileSystem
+          $zip = [System.IO.Compression.ZipFile]::Open("latest.zip", 'Update')
+          [System.IO.Compression.ZipFileExtensions]::CreateEntryFromFile($zip, "icon.png", "images/icon.png")
+          $zip.Dispose()
+          
+          # Crea la copia per il testing
+          Copy-Item "latest.zip" "latest_test.zip" -Force
+          
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          files: latest.zip
-          body_path: RELEASE_NOTES.md # Legge il testo da questo file per compilare il changelog
+          files: |
+            latest.zip
+            latest_test.zip
+          body_path: RELEASE_NOTES.md
+          generate_release_notes: true

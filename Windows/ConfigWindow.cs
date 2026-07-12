@@ -2,29 +2,28 @@ using System;
 using System.Numerics;
 using Dalamud.Interface.Windowing;
 using Dalamud.Bindings.ImGui;
-using Dalamud.Bindings.ImGui;
-using DalamudTranslator.Services;
+using AllaganTranslator.Services;
 
-namespace DalamudTranslator.Windows
+namespace AllaganTranslator.Windows
 {
     public class ConfigWindow : Window, IDisposable
     {
         private readonly Configuration configuration;
-        private readonly TranslationService translationService;
+        private readonly TranslationManager translationManager;
         private float downloadProgress = 0.0f;
         
         private string newGlossaryOriginal = "";
         private string newGlossaryTranslation = "";
 
-        public ConfigWindow(Configuration configuration, TranslationService translationService) 
+        public ConfigWindow(Configuration configuration, TranslationManager translationManager) 
             : base("Allagan Translator (Local AI & Online) - Configurazione", ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.AlwaysAutoResize)
         {
             this.configuration = configuration;
-            this.translationService = translationService;
+            this.translationManager = translationManager;
             this.Size = new Vector2(400, 450);
             this.SizeCondition = ImGuiCond.FirstUseEver;
 
-            this.translationService.OnDownloadProgress += (progress) => 
+            this.translationManager.OnDownloadProgress += (progress) => 
             {
                 this.downloadProgress = progress;
             };
@@ -38,10 +37,15 @@ namespace DalamudTranslator.Windows
             ImGui.Separator();
             ImGui.Spacing();
 
-            var targetLanguage = this.configuration.TargetLanguage;
-            if (ImGui.InputText("Lingua di destinazione", ref targetLanguage, 10))
+            var languages = new[] { "Italiana" };
+            var languageCodes = new[] { "it" };
+            
+            int currentLanguageIndex = Array.IndexOf(languageCodes, this.configuration.TargetLanguage);
+            if (currentLanguageIndex < 0) currentLanguageIndex = 0;
+
+            if (ImGui.Combo("Lingua di destinazione", ref currentLanguageIndex, languages, languages.Length))
             {
-                this.configuration.TargetLanguage = targetLanguage;
+                this.configuration.TargetLanguage = languageCodes[currentLanguageIndex];
                 this.configuration.Save();
             }
 
@@ -50,18 +54,24 @@ namespace DalamudTranslator.Windows
             ImGui.Text("Motore di Traduzione:");
             
             var currentEngine = (int)this.configuration.TranslationEngine;
-            var engineNames = new[] { "Google Translate API (Cloud, Gratis)", "Llama 3.2 3B (Locale, CPU)" };
+            var engineNames = new[] { "Google Translate API (Cloud, Gratis)", "Llama 3.2 3B (Locale, CPU)", "Llama 3.1 8B (Locale, CPU)" };
             if (ImGui.Combo("##EngineCombo", ref currentEngine, engineNames, engineNames.Length))
             {
                 this.configuration.TranslationEngine = (TranslationEngineType)currentEngine;
                 this.configuration.Save();
-                _ = this.translationService.InitializeModelAsync();
+                _ = this.translationManager.InitializeModelAsync();
             }
 
-            if (this.configuration.TranslationEngine == TranslationEngineType.LocalLlamaVulkan)
+            if (this.configuration.TranslationEngine == TranslationEngineType.LocalLlama8B_CPU)
+            {
+                ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(1.0f, 0.4f, 0.4f, 1.0f));
+                ImGui.TextWrapped("Attenzione: Il modello Llama 3.1 8B è molto più accurato del 3.2 3B, ma è anche MOLTO più pesante. Essendo elaborato sulla CPU, richiede una notevole potenza di calcolo e i tempi di traduzione saranno decisamente più lunghi.");
+                ImGui.PopStyleColor();
+            }
+            else if (this.configuration.TranslationEngine == TranslationEngineType.LocalLlama3B_CPU)
             {
                 ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(0.7f, 0.7f, 0.7f, 1.0f));
-                ImGui.TextWrapped("Nota: l'IA locale elabora il testo sul tuo PC. La traduzione potrebbe richiedere qualche istante e la sua velocità dipende esclusivamente dalla potenza del tuo processore.");
+                ImGui.TextWrapped("Nota: l'IA locale elabora il testo sul tuo PC. La traduzione potrebbe richiedere qualche istante e la sua velocità dipende esclusivamente dalla potenza del tuo hardware.");
                 ImGui.PopStyleColor();
             }
 
@@ -159,22 +169,38 @@ namespace DalamudTranslator.Windows
             ImGui.Spacing();
             ImGui.Separator();
 
-            if (this.configuration.TranslationEngine == TranslationEngineType.LocalLlamaVulkan)
+            if (this.configuration.TranslationEngine == TranslationEngineType.LocalLlama3B_CPU || 
+                this.configuration.TranslationEngine == TranslationEngineType.LocalLlama8B_CPU)
             {
-                ImGui.Text("Stato Motore di Traduzione (Llama 3.2 3B - CPU):");
+                bool is8B = this.configuration.TranslationEngine == TranslationEngineType.LocalLlama8B_CPU;
+                ImGui.Text(is8B ? "Stato Motore di Traduzione (Llama 3.1 8B - CPU):" : "Stato Motore di Traduzione (Llama 3.2 3B - CPU):");
                 
-                if (this.translationService.IsDownloading)
+                if (this.translationManager.IsDownloading)
                 {
-                    ImGui.TextColored(new Vector4(1, 1, 0, 1), "Scaricamento in corso (Circa 2 GB)...");
+                    string sizeStr = is8B ? "4.9 GB" : "2.1 GB";
+                    ImGui.TextColored(new Vector4(1, 1, 0, 1), $"Scaricamento in corso (Circa {sizeStr})...");
                     ImGui.ProgressBar(this.downloadProgress, new Vector2(-1, 0));
                 }
-                else if (this.translationService.IsReady)
+                else if (this.translationManager.IsCurrentModelDownloaded())
                 {
-                    ImGui.TextColored(new Vector4(0, 1, 0, 1), "Modello caricato nella CPU e pronto!");
+                    if (this.translationManager.IsReady)
+                    {
+                        ImGui.TextColored(new Vector4(0, 1, 0, 1), "Stato Modello: Pronto all'uso (Caricato)");
+                    }
+                    else
+                    {
+                        ImGui.TextColored(new Vector4(1, 1, 0, 1), "Stato Modello: Presente sul disco. Inizializzazione in corso...");
+                    }
                 }
                 else
                 {
-                    ImGui.TextColored(new Vector4(1, 0, 0, 1), "In attesa di inizializzazione...");
+                    ImGui.TextColored(new Vector4(1, 0, 0, 1), "Stato Modello: Non scaricato.");
+                    string sizeStr = is8B ? "4.9 GB" : "2.1 GB";
+                    ImGui.TextWrapped($"Il modello selezionato non è presente sul tuo PC. Dimensione prevista: ~{sizeStr}");
+                    if (ImGui.Button("Avvia Download Modello"))
+                    {
+                        _ = this.translationManager.InitializeModelAsync(forceDownload: true);
+                    }
                 }
             }
             else
@@ -184,3 +210,4 @@ namespace DalamudTranslator.Windows
         }
     }
 }
+

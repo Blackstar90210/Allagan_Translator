@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using Dalamud.Interface.Windowing;
 using Dalamud.Bindings.ImGui;
 using Dalamud.Game.Text;
-using DalamudTranslator.Services;
+using AllaganTranslator.Services;
 
-namespace DalamudTranslator.Windows
+namespace AllaganTranslator.Windows
 {
     public class TranslatorOverlay : Window
     {
@@ -139,3 +139,4 @@ namespace DalamudTranslator.Windows
         }
     }
 }
+

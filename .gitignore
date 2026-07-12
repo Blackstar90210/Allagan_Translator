@@ -5,3 +5,5 @@ obj/
 *.suo
 *.docstates
 .vs/
+*.zip
+.agents/
